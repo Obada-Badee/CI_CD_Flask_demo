@@ -52,6 +52,7 @@ def create_task():
 
 @app.route('/todo/api/v1/tasks/<int:task_id>', methods=['PUT'])
 def update_task():
+    """ A PUT method that updates a present task with its ID number"""
     task = [task for task in tasks if task['id'] == task_id]
 
     if len(task) == 0:
