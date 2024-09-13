@@ -3,6 +3,7 @@ from flask import Flask, jsonify, abort, make_response
 
 app = Flask(__name__)
 
+#Demo data for application
 tasks = [
     {
         'id': 1,
@@ -21,11 +22,13 @@ tasks = [
 
 @app.route('/todo/api/v1/tasks', methods=['GET'])
 def get_tasks():
+    """Get requst that retruns all tasks"""
     return jsonify({'tasks': tasks})
 
 
 @app.route('/todo/api/v1/tasks/<int:task_id>', methods=['GET'])
 def get_task(task_id):
+    """Get requst that retruns one task by ID"""
     task = [task for task in tasks if task['id'] == task_id]
     if len(task) == 0:
         abort(404)
