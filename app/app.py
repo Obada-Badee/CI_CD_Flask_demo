@@ -1,5 +1,6 @@
 #!flask/bin/python
-from flask import Flask, jsonify, abort, make_response
+from flask import Flask, jsonify, abort, make_response, request
+
 
 app = Flask(__name__)
 
@@ -40,7 +41,7 @@ tasks = [
 @app.route('/todo/api/v1/tasks', methods=['GET'])
 def get_tasks():
     """Get requst that retruns all tasks"""
-    return jsonify({'tasks': tasks_dict})
+    return jsonify({'All Tasks':tasks_dict})
 
 
 @app.route('/todo/api/v1/tasks/<int:task_id>', methods=['GET'])
@@ -49,7 +50,7 @@ def get_task(task_id):
     task = tasks_dict.get(task_id, None)
     if task == None:
         abort(404)
-    return jsonify({'task': task})
+    return jsonify({'The Task': task})
 
 
 @app.route('/todo/api/v1/tasks', methods=['POST'])
@@ -57,14 +58,19 @@ def create_task():
     """ Post request that adds new task"""
     if not request.json or 'title' not in request.json:
         abort(400)
+
+    # Generate a unique ID using UUID
+    task_id = sorted(tasks_dict.items())[-1][0] + 1
+
     task = {
-        'id': tasks[-1]['id'] + 1,
+        'id': task_id,
         'title': request.json['title'],
         'description': request.json.get('description', ""),
         'done': False
     }
-    tasks.append(task)
-    return (jsonify({'task': task}), 201)
+
+    tasks_dict[task_id] = task
+    return jsonify({'task': task}), 201
 
 
 @app.route('/todo/api/v1/tasks/<int:task_id>', methods=['PUT'])
