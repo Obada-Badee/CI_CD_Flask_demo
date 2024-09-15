@@ -84,6 +84,7 @@ def delete_task(task_id):
 
 @app.errorhandler(404)
 def not_found(error):
+    """ Function to handle errors"""
     return make_response(jsonify({'error': 'Not found'}), 404)
 
 
