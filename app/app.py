@@ -74,6 +74,7 @@ def update_task():
 
 @app.route('/todo/api/v1/tasks/<int:task_id>', methods=['DELETE'])
 def delete_task(task_id):
+    """ DELETE Method that deletes a task already there """
     task = [task for task in tasks if task['id'] == task_id]
     if len(task) == 0:
         abort(404)
