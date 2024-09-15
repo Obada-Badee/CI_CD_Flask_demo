@@ -3,6 +3,23 @@ from flask import Flask, jsonify, abort, make_response
 
 app = Flask(__name__)
 
+
+tasks_dict = {
+    1:{
+        'id': 1,
+        'title': u'Buy groceries',
+        'description': u'Milk, Cheese, Pizza, Fruit, Tylenol',
+        'done': False
+    },
+
+    2:   {
+        'id': 2,
+        'title': u'Learn Python',
+        'description': u'Need to find a good Python tutorial on the web',
+        'done': False
+    }
+    
+}
 #Demo data for application
 tasks = [
     {
@@ -23,16 +40,16 @@ tasks = [
 @app.route('/todo/api/v1/tasks', methods=['GET'])
 def get_tasks():
     """Get requst that retruns all tasks"""
-    return jsonify({'tasks': tasks})
+    return jsonify({'tasks': tasks_dict})
 
 
 @app.route('/todo/api/v1/tasks/<int:task_id>', methods=['GET'])
 def get_task(task_id):
     """Get requst that retruns one task by ID"""
-    task = [task for task in tasks if task['id'] == task_id]
-    if len(task) == 0:
+    task = tasks_dict.get(task_id, None)
+    if task == None:
         abort(404)
-    return jsonify({'task': task[0]})
+    return jsonify({'task': task})
 
 
 @app.route('/todo/api/v1/tasks', methods=['POST'])
@@ -47,11 +64,11 @@ def create_task():
         'done': False
     }
     tasks.append(task)
-    return jsonify({'task': task}), 201
+    return (jsonify({'task': task}), 201)
 
 
 @app.route('/todo/api/v1/tasks/<int:task_id>', methods=['PUT'])
-def update_task():
+def update_task(task_id):
     """ A PUT method that updates a present task with its ID number"""
     task = [task for task in tasks if task['id'] == task_id]
 
