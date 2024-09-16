@@ -15,7 +15,7 @@ pipeline {
             }
         }
 
-        staeg('Push') {
+        stage('Push') {
             steps {
                 sh 'sudo docker push gasimxhacker/flask-server:latest'
             }
