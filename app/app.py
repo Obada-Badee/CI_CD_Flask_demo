@@ -41,7 +41,8 @@ def get_task(task_id):
 @app.route('/todo/api/v1/tasks', methods=['POST'])
 def create_task():
     """ Post request that adds new task"""
-    if not request.json or 'title' not in request.json:
+    json = request.get_json(silent=True)
+    if not json or 'title' not in request.json:
         abort(400)
 
     # Generate a unique ID using UUID
@@ -65,8 +66,8 @@ def update_task(task_id):
 
     if task is None:
         abort(400)
-
-    if not request.json:
+    json = request.get_json(silent=True)
+    if not json:
         abort(400)
 
     # Validate data types (adjust based on your specific requirements)
