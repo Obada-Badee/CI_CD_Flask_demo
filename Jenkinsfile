@@ -5,7 +5,7 @@ pipeline {
 
         stage('Build Docker Image'){
             steps {
-                sh 'sudo docker build -t gasimxhacker/flask-server:latest .'
+                sh 'docker build -t gasimxhacker/flask-server:latest .'
             }
         }
         stage('Test API') {
