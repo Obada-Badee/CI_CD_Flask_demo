@@ -26,16 +26,5 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
-            steps {
-              sh 'echo "Deploy stage"'
-            }
-        }
-
-        stage('Echo') {
-            steps {
-                sh 'echo "Done"'
-            }
-        }
     }
 }
