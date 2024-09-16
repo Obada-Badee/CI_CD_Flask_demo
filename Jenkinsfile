@@ -2,15 +2,15 @@ pipeline {
     agent any
 
     stages {
-        stage('Build Docker Image'){
-            steps {
-                sh 'docker build -t gasimxhacker/flask-server:latest .'
-            }
-        }
-
         stage('Delete Older Images') {
             steps {
                 sh 'docker rmi $(docker images -q) -f || true'
+            }
+        }
+
+        stage('Build Docker Image'){
+            steps {
+                sh 'docker build -t gasimxhacker/flask-server:latest .'
             }
         }
 
