@@ -6,17 +6,18 @@ pipeline {
         stage('Build Docker Image'){
             steps {
                 sh 'docker build -t gasimxhacker/flask-server:latest .'
+                sh ''
             }
         }
         stage('Test API') {
             steps {
-                sh 'sudo docker run -it gasimxhacker/flask-server:latest python3 -m unittest discover tests'
+                sh 'docker run -it gasimxhacker/flask-server:latest python3 -m unittest discover tests'
             }
         }
 
         stage('Push') {
             steps {
-                sh 'sudo docker push gasimxhacker/flask-server:latest'
+                sh 'docker push gasimxhacker/flask-server:latest'
             }
         }
 
