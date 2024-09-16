@@ -2,21 +2,28 @@ pipeline {
     agent any
 
     stages {
+
+        stage('Build'){
+            steps {
+                sh 'sudo docker build -t gasimxhacker/flask-server:latest .'
+                sh 'sudo docker run -d -p 5000:5000 gasimxhacker/flask-server:latest'
+            }
+        }
         stage('Test') {
             steps {
-                script {
-                    // Capture the command output in a variable
-                    // def testOutput = sh(script: 'python3 app/test_app.py', returnStatus: true)
-                    def testOutput = 0
-                    // Check if the command exited with a non-zero exit code (indicating failure)
-                    if (testOutput != 0) {
-                        // Display error message and fail the stage
-                        error "Tests failed! The output from the test script is:\n${testOutput}"
-                    } else {
-                        // Tests passed, continue
-                        echo 'Tests passed successfully!'
-                    }
-                }
+                sh 'sudo docker run -it gasimxhacker/flask-server:latest python3 -m unittest discover tests'
+            }
+        }
+
+        staeg('Push') {
+            steps {
+                sh 'sudo docker push gasimxhacker/flask-server:latest'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+              sh ''
             }
         }
 
