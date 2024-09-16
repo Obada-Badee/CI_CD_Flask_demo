@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Delete Older Images') {
             steps {
-                sh 'docker rmi -f $(docker images -q)'
+                sh 'docker rmi -f ${(docker images -q)}'
             }
         }
 
