@@ -10,7 +10,7 @@ pipeline {
 
         stage('Delete Older Images') {
             steps {
-                sh 'docker image prune'
+                sh 'docker rmi $(docker images -q) -f || true'
             }
         }
 
