@@ -1,5 +1,5 @@
 import unittest
-from app import app, tasks_dict
+from app.app import app, tasks_dict
 
 
 class ToDoAPITestCase(unittest.TestCase):
