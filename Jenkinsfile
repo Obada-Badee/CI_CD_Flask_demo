@@ -52,8 +52,7 @@ pipeline {
     post {  
         always {
             script {
-                sh 'git show --format="%ae" HEAD > last_committer.txt'
-                def lastCommitEmail = readFile 'last_committer.txt'
+                def lastCommitEmail = git.log()[0].authorEmail
             }
          }  
         success {  
