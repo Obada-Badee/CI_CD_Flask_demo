@@ -42,8 +42,8 @@ pipeline {
 
         stage('Run the image on the server') {
             steps {
-                sh "docker ps -a -q --filter ancestor=${env.repo}:latest | xargs -r docker stop"
-                sh "docker ps -a -q --filter ancestor=${env.repo}:latest | xargs -r docker rm"
+                sh "docker stop $(docker ps -q --filter ancestor=${env.repo}:latest)"
+                sh "docker rm $(docker ps -q --filter ancestor=${env.repo}:latest)"
                 sh "docker run -d -p 5000:5000 ${env.repo}:latest"
             }
         }
