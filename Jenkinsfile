@@ -49,21 +49,18 @@ pipeline {
         }
     }
 
-    post {  
-        always {
-            script {
-                def lastCommitEmail = git.log()[0].authorEmail
-            }
-         }  
+    post { 
         success {  
-            emailext(to: lastCommitEmail,
+            emailext(
                 subject: "Pipeline Status: SUCCESS",
-                body: "Pipeline ${currentBuild.fullDisplayName} has SUCCESS.")
+                body: "Pipeline ${currentBuild.fullDisplayName} has SUCCESS.",
+                recipientProviders: [[$class: 'DevelopersRecipientProvider']])
         }  
         failure {  
-            emailext(to: lastCommitEmail,
+            emailext(
                 subject: "Pipeline Status: FAILURE",
-                body: "Pipeline ${currentBuild.fullDisplayName} has FAILURE.")
+                body: "Pipeline ${currentBuild.fullDisplayName} has FAILURE.",
+                recipientProviders: [[$class: 'DevelopersRecipientProvider']])
         }
     }
 }
