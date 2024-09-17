@@ -9,7 +9,7 @@ pipeline {
         }
 
         stage('Build Docker Image'){
-            script {
+            steps {
                 env.version = "v${env.BUILD_NUMBER}"
                 env.repo = "gasimxhacker/flask-server"
                 sh "docker build -t ${env.repo}:${env.version} ."
