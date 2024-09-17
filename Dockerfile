@@ -34,7 +34,7 @@ RUN adduser \
 # Copy the source code into the container.
 COPY . .
 
-RUN python -m pip install --no-cache-dir -r requirements.txt \
+RUN python -m pip install -r requirements.txt \
     && rm requirements.txt
 
 # Expose the port that the application listens on.
