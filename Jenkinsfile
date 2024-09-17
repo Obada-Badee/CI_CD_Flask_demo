@@ -48,7 +48,7 @@ pipeline {
             }
         }
 
-                stage('Send Email') {
+        stage('Send Email') {
             when {
                 expression {
                     // Check pipeline status and send email accordingly
