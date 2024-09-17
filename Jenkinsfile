@@ -9,8 +9,11 @@ pipeline {
         }
 
         stage('Build Docker Image'){
-            steps {
-                sh 'docker build -t gasimxhacker/flask-server:latest .'
+            script {
+                env.version = "v${env.BUILD_NUMBER}"
+                env.repo = "gasimxhacker/flask-server"
+                sh "docker build -t ${env.repo}:${env.version} ."
+                sh 'docker tag ${env.repo}:${env.version} ${env.repo}:latest'
             }
         }
 
@@ -24,7 +27,8 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: "${DOCKER_REGISTRY_CREDS}", passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
                     sh "echo \$DOCKER_PASSWORD | docker login -u \$DOCKER_USERNAME --password-stdin docker.io"
-                    sh 'docker push $DOCKER_BFLASK_IMAGE'
+                    sh 'docker push ${env.repo}:${env.version}'
+                    sh 'docker push ${env.repo}:latest'
                 }
             }
         }
