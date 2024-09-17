@@ -13,9 +13,9 @@ pipeline {
 
         stage('Delete Older Images') {
             steps {
-                sh "docker stop \$(docker ps -q --filter ancestor=${env.repo}:latest) || true"
-                sh "docker rm \$(docker ps -q --filter ancestor=${env.repo}:latest) || true"
-                sh "docker rmi ${env.repo}:latest -f || true"
+                sh 'docker stop $(docker ps -q) || true'
+                sh 'docker rm $(docker ps -a -q) || true'
+                sh 'docker rmi $(docker images -q) -f || true'
             }
         }
 
