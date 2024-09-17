@@ -11,6 +11,7 @@ pipeline {
     post { 
         success {  
             emailext(
+                to: 'obadabadee3@hotmail.com'
                 subject: "Pipeline Status: SUCCESS",
                 body: "Pipeline ${currentBuild.fullDisplayName} has SUCCESS.",
                 recipientProviders: [[$class: 'PreviousRecipientProvider']])
