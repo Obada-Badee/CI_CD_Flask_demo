@@ -56,16 +56,19 @@ pipeline {
                 }
             }
             steps {
-                // Retrieve the last committer's email
-                sh 'git show --format="%ae" HEAD > last_committer.txt'
+                script {
+                    // Retrieve the last committer's email
+                    sh 'git show --format="%ae" HEAD > last_committer.txt'
 
-                // Read the email from the file
-                def lastCommitEmail = readFile 'last_committer.txt'
+                    // Read the email from the file
+                    def lastCommitEmail = readFile 'last_committer.txt'
 
-                // Send email
-                emailext(to: lastCommitEmail,
-                         subject: "Pipeline Status: ${currentBuild.result}",
-                         body: "Pipeline ${currentBuild.fullDisplayName} has ${currentBuild.result}.")
+                    // Send email
+                    emailext(to: lastCommitEmail,
+                        subject: "Pipeline Status: ${currentBuild.result}",
+                        body: "Pipeline ${currentBuild.fullDisplayName} has ${currentBuild.result}.")
+
+                }
             }
         }
     }
