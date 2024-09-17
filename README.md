@@ -153,4 +153,4 @@ The application includes unit tests located in the tests/ directory. To run the 
 python3 -m unittest discover tests
 ```
 ## License
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
