@@ -13,7 +13,7 @@ pipeline {
             emailext(
                 subject: "Pipeline Status: SUCCESS",
                 body: "Pipeline ${currentBuild.fullDisplayName} has SUCCESS.",
-                to: 'obadabadee3@hotmail.com'
+                to: 'obadabadee3@hotmail.com')
         }  
         failure {  
             emailext(
