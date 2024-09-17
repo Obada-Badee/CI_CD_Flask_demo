@@ -54,13 +54,13 @@ pipeline {
             emailext(
                 subject: "Pipeline Status: SUCCESS",
                 body: "Pipeline ${currentBuild.fullDisplayName} has SUCCESS.",
-                recipientProviders: [[$class: 'DevelopersRecipientProvider']])
+                recipientProviders: [[$class: 'RequesterRecipientProvider'], [$class:'CulpritsRecipientProvider']])
         }  
         failure {  
             emailext(
                 subject: "Pipeline Status: FAILURE",
                 body: "Pipeline ${currentBuild.fullDisplayName} has FAILURE.",
-                recipientProviders: [[$class: 'DevelopersRecipientProvider']])
+                recipientProviders: [[$class: 'RequesterRecipientProvider'], [$class:'CulpritsRecipientProvider']])
         }
     }
 }
