@@ -40,5 +40,10 @@ pipeline {
             }
         }
 
+        stage('Run the image on the server') {
+            steps {
+                sh 'docker run -d -p 5000:5000 gasimxhacker/flask-server:latest'
+            }
+        }
     }
 }
