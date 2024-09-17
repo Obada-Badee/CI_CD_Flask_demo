@@ -2,6 +2,15 @@ pipeline {
     agent any
 
     stages {
+        stage('Setup Environment Variables') {
+            steps {
+                script {
+                    env.version = "v${env.BUILD_NUMBER}"
+                    env.repo = "gasimxhacker/flask-server"
+                }
+            }
+        }
+
         stage('Delete Older Images') {
             steps {
                 sh 'docker rmi $(docker images -q) -f || true'
@@ -10,8 +19,6 @@ pipeline {
 
         stage('Build Docker Image'){
             steps {
-                env.version = "v${env.BUILD_NUMBER}"
-                env.repo = "gasimxhacker/flask-server"
                 sh "docker build -t ${env.repo}:${env.version} ."
                 sh 'docker tag ${env.repo}:${env.version} ${env.repo}:latest'
             }
