@@ -47,35 +47,24 @@ pipeline {
                 sh "docker run -d -p 5000:5000 ${env.repo}:latest"
             }
         }
+    }
 
-        stage('Send Email') {
-            when {
-                expression {
-                    // Check pipeline status and send email accordingly
-                    currentBuild.result == 'SUCCESS' || currentBuild.result == 'FAILURE'
-                }
+    post {  
+        always {
+            script {
+                sh 'git show --format="%ae" HEAD > last_committer.txt'
+                def lastCommitEmail = readFile 'last_committer.txt'
             }
-            steps {
-                post {
-                    always{
-
-                        script {
-                             // Retrieve the last committer's email
-                            sh 'git show --format="%ae" HEAD > last_committer.txt'
-
-                            // Read the email from the file
-                            def lastCommitEmail = readFile 'last_committer.txt'
-
-                            // Send email
-                            emailext(to: lastCommitEmail,
-                                subject: "Pipeline Status: ${currentBuild.result}",
-                                body: "Pipeline ${currentBuild.fullDisplayName} has ${currentBuild.result}.")
-
-                        }
-
-                    }
-                }
-            }
+         }  
+        success {  
+            emailext(to: lastCommitEmail,
+                subject: "Pipeline Status: SUCCESS",
+                body: "Pipeline ${currentBuild.fullDisplayName} has SUCCESS.")
+        }  
+        failure {  
+            emailext(to: lastCommitEmail,
+                subject: "Pipeline Status: FAILURE",
+                body: "Pipeline ${currentBuild.fullDisplayName} has FAILURE.")
         }
     }
 }
