@@ -13,7 +13,9 @@ pipeline {
 
         stage('Delete Older Images') {
             steps {
-                sh 'docker rmi $(docker images -q) -f || true'
+                sh "docker stop $(docker ps -q --filter ancestor=${env.repo}:latest)"
+                sh "docker rm $(docker ps -q --filter ancestor=${env.repo}:latest)"
+                sh "docker rmi ${env.repo}:latest -f || true"
             }
         }
 
@@ -42,8 +44,6 @@ pipeline {
 
         stage('Run the image on the server') {
             steps {
-                sh "docker stop $(docker ps -q --filter ancestor=${env.repo}:latest)"
-                sh "docker rm $(docker ps -q --filter ancestor=${env.repo}:latest)"
                 sh "docker run -d -p 5000:5000 ${env.repo}:latest"
             }
         }
