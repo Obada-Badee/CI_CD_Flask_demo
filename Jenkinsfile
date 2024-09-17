@@ -18,7 +18,7 @@ pipeline {
         }  
         failure {  
             emailext(
-                to: 'obadabadee3@hotmail.com'
+                to: 'obadabadee3@hotmail.com',
                 subject: "Pipeline Status: FAILURE",
                 body: "Pipeline ${currentBuild.fullDisplayName} has FAILURE.",
                 recipientProviders: [[$class: 'DevelopersRecipientProvider']])
