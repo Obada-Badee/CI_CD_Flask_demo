@@ -4,7 +4,7 @@ pipeline {
         stages {
         stage('Setup Environment Variables') {
             steps {
-               echo 'Done Building'
+               echo 'Done Building again'
             }
         }
     }
