@@ -29,13 +29,13 @@ def get_tasks():
     return jsonify(tasks_dict)
 
 
-# @app.route('/todo/api/v1/tasks/<int:task_id>', methods=['GET'])
-# def get_task(task_id):
-#     """Get requst that retruns one task by its ID"""
-#     task = tasks_dict.get(task_id, None)
-#     if task == None:
-#         abort(404)
-#     return jsonify(task)
+@app.route('/todo/api/v1/tasks/<int:task_id>', methods=['GET'])
+def get_task(task_id):
+    """Get requst that retruns one task by its ID"""
+    task = tasks_dict.get(task_id, None)
+    if task == None:
+        abort(404)
+    return jsonify(task)
 
 
 @app.route('/todo/api/v1/tasks', methods=['POST'])
