@@ -3,7 +3,7 @@ from flask import Flask, jsonify, abort, make_response, request
 
 
 app = Flask(__name__)
-
+app.url_map.strict_slashes = False
 
 tasks_dict = {
     1:{
