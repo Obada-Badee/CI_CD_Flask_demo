@@ -31,7 +31,7 @@ def get_tasks():
 
 @app.route('/todo/api/v1/tasks/<int:task_id>', methods=['GET'])
 def get_task(task_id):
-    """Get requst that retruns one task by ID"""
+    """Get requst that retruns one task by its ID"""
     task = tasks_dict.get(task_id, None)
     if task == None:
         abort(404)
