@@ -23,10 +23,10 @@ tasks_dict = {
 }
 
 
-# @app.route('/todo/api/v1/tasks', methods=['GET'])
-# def get_tasks():
-#     """Get requst that retruns all tasks"""
-#     return jsonify(tasks_dict)
+@app.route('/todo/api/v1/tasks', methods=['GET'])
+def get_tasks():
+    """Get requst that retruns all tasks"""
+    return jsonify(tasks_dict)
 
 
 @app.route('/todo/api/v1/tasks/<int:task_id>', methods=['GET'])
